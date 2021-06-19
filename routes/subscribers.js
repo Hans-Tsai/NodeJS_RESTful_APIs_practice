@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const Subscriber = require('../models/subscriber');
+const express = require('express')
+const router = express.Router()
+const Subscriber = require('../models/subscriber')
 
 /** Getting all */
 router.get('/', async (req, res) => {
@@ -11,18 +11,18 @@ router.get('/', async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
+})
 
 /** Getting one */
-router.get('/:id', getSubScriber, (req, res) => {
-  res.send(req.subscriber);
-});
+router.get('/:id', getSubscriber, (req, res) => {
+  res.json(res.subscriber);
+})
 
-/** Create one */
+/** Creating one */
 router.post('/', async (req, res) => {
   const subscriber = new Subscriber({
     name: req.body.name,
-    subscribedToChannel: req.body.subscribedToChannel,
+    subscribedToChannel: req.body.subscribedToChannel
   });
   try {
     const newSubscriber = await subscriber.save();
@@ -34,9 +34,9 @@ router.post('/', async (req, res) => {
 })
 
 /** Updating one */
-router.patch('/:id', getSubScriber, async (req, res) => {
-  if (!res.body.name) res.subscriber.name = req.body.name;
-  if (!res.body.subscribedToChannel) res.subscriber.subscribedToChannel = req.body.subscribedToChannel;
+router.patch('/:id', getSubscriber, async (req, res) => {
+  if (req.body.name != null) res.subscriber.name = req.body.name;
+  if (req.body.subscribedToChannel != null) res.subscriber.subscribedToChannel = req.body.subscribedToChannel;
   try {
     const updatedSubscriber = await res.subscriber.save();
     res.json(updatedSubscriber);
@@ -44,31 +44,32 @@ router.patch('/:id', getSubScriber, async (req, res) => {
   catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
+})
 
 /** Deleting one */
-router.delete('/:id', getSubScriber, async (req, res) => {
+router.delete('/:id', getSubscriber, async (req, res) => {
   try {
     await res.subscriber.remove();
     res.json({ message: 'Deleted Subscriber' });
-  }
+  } 
   catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
+})
 
-async function getSubScriber (req, res, next) {
-  let subscriber;
+async function getSubscriber(req, res, next) {
+  let subscriber
   try {
-    subscriber = await Subscriber.findById(req.params.id);
-    if (!subscriber) return res.status(404).json({ message: 'Cannot find the specified subscriber' });
+    subscriber = await Subscriber.findById(req.params.id)
+    if (subscriber == null) return res.status(404).json({ message: 'Cannot find subscriber' });
   } 
   catch (err) {
     return res.status(500).json({ message: err.message });
   }
+
   // add a customized property `subscriber` into the `response` object
   res.subscriber = subscriber;
   next();
 }
 
-module.exports = router;
+module.exports = router
