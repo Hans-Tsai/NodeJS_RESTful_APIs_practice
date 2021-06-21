@@ -2,6 +2,7 @@ Node.js RESTful APIs with express, MongoDB practice
 ===
 - This is my self practice of using Node.js, express framework, and MongoDB locally. We'll create only backend RESTful APIs, and we can utilize Visual Studio Code extension `REST client` to test them whether they're worked or not.
 
+## Prerequisites
 ### Database
 - Set up MongoDB locally
   + add `DATABASE_URL = 'mongodb://localhost/subscribers'` into `.env` file
@@ -14,7 +15,7 @@ Node.js RESTful APIs with express, MongoDB practice
 ### Run Locally
 - After set up the MongoDB URL & activated it, we can run Node.js server locally using the command below
   + $ `npm run devStart`
-
+## DEMO
 ### Test RESTful APIs with the VSCode Extension <font color=blue>REST Client</font>
 - Open the `route.rest` file
   + <font color=orange>`GET Model.find()`</font>: Trigger a `GET` request to <font color=orange>find all</font> of the documents in the `subscriber` collection.
